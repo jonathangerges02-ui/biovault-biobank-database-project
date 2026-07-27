@@ -198,3 +198,20 @@ the report. The submitting student must replace the name/ID placeholders,
 review every design decision and SQL statement, and be able to modify or explain
 them during defense. AI-assisted material should be disclosed if required by the
 institution's policy.
+
+## Publish as the required public GitHub repository
+
+The local repository is already committed on branch `main`. Authenticate the
+GitHub CLI once, then run the included guarded publishing script:
+
+```powershell
+gh auth login -h github.com -p https -w
+powershell -ExecutionPolicy Bypass -File scripts/publish_github.ps1
+```
+
+The script refuses to publish a dirty worktree or overwrite an existing
+`origin`. By default it creates the public repository
+`biovault-biobank-database-project`, pushes `main`, and prints the public URL.
+
+Before academic submission, complete [SUBMISSION_CHECKLIST.md](SUBMISSION_CHECKLIST.md)
+and replace the student name/ID placeholders.

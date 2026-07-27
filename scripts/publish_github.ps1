@@ -1,0 +1,54 @@
+param(
+    [string]$RepositoryName = 'biovault-biobank-database-project',
+    [string]$Description = 'Complete PostgreSQL biobank database project with ERD, 3NF report, tests, presentation, video, and CRUD desktop application.'
+)
+
+$ErrorActionPreference = 'Stop'
+$projectRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
+Set-Location $projectRoot
+
+if (-not (Get-Command gh -ErrorAction SilentlyContinue)) {
+    throw 'GitHub CLI (gh) is not installed. Install it from https://cli.github.com/'
+}
+
+& gh auth status -h github.com
+if ($LASTEXITCODE -ne 0) {
+    Write-Host ''
+    Write-Host 'GitHub authentication is required. Run:' -ForegroundColor Yellow
+    Write-Host '  gh auth login -h github.com -p https -w' -ForegroundColor Cyan
+    Write-Host 'Then rerun this script.' -ForegroundColor Yellow
+    exit 1
+}
+
+$dirty = & git status --porcelain
+if ($dirty) {
+    throw 'The worktree is not clean. Commit or review local changes before publishing.'
+}
+
+$existingOrigin = & git remote get-url origin 2>$null
+if ($LASTEXITCODE -eq 0 -and $existingOrigin) {
+    throw "A remote named origin already exists: $existingOrigin"
+}
+
+$login = (& gh api user --jq .login).Trim()
+$fullName = "$login/$RepositoryName"
+
+& gh repo view $fullName --json nameWithOwner 2>$null
+if ($LASTEXITCODE -eq 0) {
+    throw "Repository $fullName already exists. Choose another -RepositoryName."
+}
+
+& gh repo create $RepositoryName `
+    --public `
+    --description $Description `
+    --source . `
+    --remote origin `
+    --push
+
+if ($LASTEXITCODE -ne 0) {
+    throw 'GitHub repository creation or push failed.'
+}
+
+$url = (& gh repo view --json url --jq .url).Trim()
+Write-Host ''
+Write-Host "Published successfully: $url" -ForegroundColor Green
