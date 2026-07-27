@@ -40,9 +40,10 @@ powershell -ExecutionPolicy Bypass -File scripts/render_video.ps1
 - [x] Rehearsal video is 18:23 with H.264 video and AAC audio.
 - [x] Bonus application performs validated database-backed CRUD.
 - [x] Git repository is clean and committed.
-- [ ] Public GitHub repository URL recorded below.
+- [x] Public GitHub repository created, pushed, and remotely verified.
 
-Public repository: `________________________________________`
+Public repository:  
+https://github.com/jonathangerges02-ui/biovault-biobank-database-project
 
 ## Final upload
 

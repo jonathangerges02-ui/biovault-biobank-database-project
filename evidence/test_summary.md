@@ -102,3 +102,20 @@ returned to 12 donors.
   H.264 video and AAC audio.
 - `diagrams/ERD.png` is 3400×1900 and its exact source is included in
   `diagrams/ERD.mmd`.
+
+## Public repository verification
+
+Repository:
+
+https://github.com/jonathangerges02-ui/biovault-biobank-database-project
+
+Verified remotely on branch `main`:
+
+```text
+visibility=PUBLIC
+default branch=main
+repository tree entries=83
+report.pdf size=640520 bytes
+BioVault_Presentation_Video.mp4 size=13337107 bytes
+sql/setup.sql present
+```

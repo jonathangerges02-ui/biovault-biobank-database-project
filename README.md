@@ -6,6 +6,9 @@ implementation, synthetic data, advanced queries, business-rule enforcement,
 automated testing, documentation, presentation, and a connected desktop CRUD
 application for the five bonus marks.
 
+**Public repository:**  
+https://github.com/jonathangerges02-ui/biovault-biobank-database-project
+
 > **Student:** `[REPLACE WITH STUDENT NAME]`  
 > **Student ID:** `[REPLACE WITH STUDENT ID]`  
 > **Course:** Fundamentals of Databases  
