@@ -36,6 +36,7 @@ powershell -ExecutionPolicy Bypass -File scripts/render_video.ps1
 - [x] Python UI tests passed: 8/8.
 - [x] PostgreSQL-connected donor CRUD integration passed.
 - [x] Report opens as DOCX and PDF.
+- [x] Beginner-to-advanced course opens as an 88-page PDF and editable DOCX.
 - [x] Presentation opens as an 18-slide PPTX.
 - [x] Rehearsal video is 18:23 with H.264 video and AAC audio.
 - [x] Bonus application performs validated database-backed CRUD.

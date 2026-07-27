@@ -31,6 +31,21 @@ https://github.com/jonathangerges02-ui/biovault-biobank-database-project
   create/update/delete operations
 - report in DOCX/PDF, ERD in PNG/source form, PowerPoint, narration script,
   defense guide, and demonstration video
+- a complete English beginner-to-advanced course book in PDF and editable DOCX,
+  with guided labs, solutions, cheat sheets, and a glossary
+
+## Beginner-to-advanced course book
+
+The learning companion starts at “What is data?” and progresses through the
+entire project: requirements, ER modeling, keys, 3NF, PostgreSQL, constraints,
+basic and advanced SQL, views, indexes, ACID transactions, concurrency-safe
+triggers, auditing, the Python CRUD application, automated testing, Git, and
+oral defense.
+
+- [Read the PDF course](course/BioVault_Database_Masterclass.pdf)
+- [Open the editable Word edition](course/BioVault_Database_Masterclass.docx)
+- [Browse the Markdown source](course/BioVault_Database_Masterclass.md)
+- [Course build instructions](course/README.md)
 
 ## Repository layout
 
@@ -61,6 +76,7 @@ https://github.com/jonathangerges02-ui/biovault-biobank-database-project
 ├── docs/
 ├── presentation/
 ├── evidence/
+├── course/
 └── scripts/
 ```
 

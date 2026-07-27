@@ -35,6 +35,9 @@ REQUIRED = [
     "presentation/live_demo_runbook.md",
     "presentation/defense_questions.md",
     "evidence/test_summary.md",
+    "course/BioVault_Database_Masterclass.md",
+    "course/BioVault_Database_Masterclass.docx",
+    "course/BioVault_Database_Masterclass.pdf",
 ]
 
 
@@ -60,6 +63,17 @@ def main() -> None:
 
     pdf = PdfReader(ROOT / "report.pdf")
     require(len(pdf.pages) >= 10, "Report PDF should contain at least 10 pages")
+
+    course_pdf = PdfReader(ROOT / "course" / "BioVault_Database_Masterclass.pdf")
+    require(len(course_pdf.pages) >= 70, "Course PDF should contain at least 70 pages")
+
+    course_docx = ROOT / "course" / "BioVault_Database_Masterclass.docx"
+    with zipfile.ZipFile(course_docx) as archive:
+        require(archive.testzip() is None, "Course DOCX is a damaged ZIP package")
+        require(
+            "word/document.xml" in archive.namelist(),
+            "Course DOCX is not Word OOXML",
+        )
 
     deck = Presentation(ROOT / "presentation.pptx")
     require(len(deck.slides) == 18, "Presentation must contain 18 slides")
@@ -98,6 +112,7 @@ def main() -> None:
     print("Submission validation passed.")
     print(f"Required files: {len(REQUIRED)}")
     print(f"Report pages: {len(pdf.pages)}")
+    print(f"Course pages: {len(course_pdf.pages)}")
     print(f"Presentation slides: {len(deck.slides)}")
     print(f"Video duration: {duration:.1f} seconds")
     print("Schema objects: 15 tables, 13 targeted indexes, 3 views")

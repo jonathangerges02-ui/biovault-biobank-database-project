@@ -1,0 +1,43 @@
+\usepackage{fancyhdr}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{enumitem}
+
+\definecolor{BioBlue}{HTML}{145A7A}
+\definecolor{BioTeal}{HTML}{168A8A}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small BioVault Database Masterclass}
+\fancyhead[R]{\small From Absolute Zero to Expert}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{14pt}
+
+\setlist{itemsep=2pt,topsep=4pt}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+
+\RecustomVerbatimEnvironment{Highlighting}{Verbatim}{
+  commandchars=\\\{\},
+  fontsize=\small
+}
+
+\makeatletter
+\renewcommand{\maketitle}{
+  \begin{titlepage}
+    \thispagestyle{empty}
+    \centering
+    \vspace*{0.16\textheight}
+    {\color{BioBlue}\rule{\textwidth}{1.6pt}\par}
+    \vspace{1.2cm}
+    {\Huge\bfseries\color{BioBlue}\@title\par}
+    \vspace{1.0cm}
+    {\Large\color{black}\@author\par}
+    \vfill
+    {\large\@date\par}
+    \vspace{1.0cm}
+    {\color{BioTeal}\rule{\textwidth}{1.6pt}\par}
+  \end{titlepage}
+  \setcounter{page}{1}
+}
+\makeatother
