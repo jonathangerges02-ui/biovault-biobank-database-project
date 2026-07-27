@@ -1,0 +1,161 @@
+erDiagram
+    DONORS ||--o{ CONSENTS : grants
+    CONSENT_TYPES ||--o{ CONSENTS : classifies
+    DONORS ||--o{ COLLECTION_EVENTS : participates_in
+    RESEARCHERS ||--o{ COLLECTION_EVENTS : collects
+    COLLECTION_EVENTS ||--|{ SAMPLES : produces
+    SAMPLE_TYPES ||--o{ SAMPLES : classifies
+    SAMPLES ||--|{ ALIQUOTS : divided_into
+    STORAGE_UNITS o|--o{ STORAGE_UNITS : contains
+    STORAGE_UNITS ||--o{ ALIQUOTS : stores
+    RESEARCHERS ||--o{ RESEARCH_PROJECTS : leads
+    RESEARCH_PROJECTS ||--|{ PROJECT_RESEARCHERS : has_members
+    RESEARCHERS ||--o{ PROJECT_RESEARCHERS : joins
+    SAMPLES ||--o{ TEST_REQUESTS : undergoes
+    TEST_TYPES ||--o{ TEST_REQUESTS : defines
+    RESEARCHERS ||--o{ TEST_REQUESTS : requests
+    RESEARCH_PROJECTS o|--o{ TEST_REQUESTS : funds
+    ALIQUOTS ||--o{ SAMPLE_USAGE : consumed_in
+    RESEARCH_PROJECTS ||--o{ SAMPLE_USAGE : authorizes
+    RESEARCHERS ||--o{ SAMPLE_USAGE : records
+    DONORS ||--o{ AUDIT_LOG : audited_indirectly
+
+    DONORS {
+        bigint donor_id PK
+        varchar donor_code UK
+        varchar sex_at_birth
+        smallint birth_year
+        varchar blood_type
+        varchar ethnicity
+        varchar donor_status
+        date registered_on
+    }
+
+    CONSENT_TYPES {
+        smallint consent_type_id PK
+        varchar consent_code UK
+        varchar consent_name
+    }
+
+    CONSENTS {
+        bigint consent_id PK
+        bigint donor_id FK
+        smallint consent_type_id FK
+        varchar version_no
+        date granted_on
+        date expires_on
+        varchar consent_status
+        text restrictions
+    }
+
+    RESEARCHERS {
+        bigint researcher_id PK
+        varchar researcher_code UK
+        varchar full_name
+        varchar email UK
+        varchar institution
+        boolean is_active
+    }
+
+    RESEARCH_PROJECTS {
+        bigint project_id PK
+        varchar project_code UK
+        bigint lead_researcher_id FK
+        varchar ethics_approval_code UK
+        date start_date
+        date end_date
+        varchar project_status
+    }
+
+    PROJECT_RESEARCHERS {
+        bigint project_id PK,FK
+        bigint researcher_id PK,FK
+        varchar project_role
+        date joined_on
+        date left_on
+    }
+
+    SAMPLE_TYPES {
+        smallint sample_type_id PK
+        varchar type_code UK
+        varchar type_name
+        varchar default_unit
+        numeric min_storage_temp_c
+        numeric max_storage_temp_c
+    }
+
+    COLLECTION_EVENTS {
+        bigint collection_event_id PK
+        varchar event_code UK
+        bigint donor_id FK
+        bigint collected_by FK
+        timestamptz collected_at
+        varchar protocol_code
+    }
+
+    SAMPLES {
+        bigint sample_id PK
+        varchar sample_code UK
+        bigint collection_event_id FK
+        smallint sample_type_id FK
+        numeric initial_quantity
+        varchar quality_status
+        varchar sample_status
+    }
+
+    STORAGE_UNITS {
+        bigint storage_unit_id PK
+        bigint parent_storage_unit_id FK
+        varchar location_code UK
+        varchar unit_type
+        numeric temperature_c
+        integer capacity_positions
+    }
+
+    ALIQUOTS {
+        bigint aliquot_id PK
+        varchar aliquot_code UK
+        bigint sample_id FK
+        bigint storage_unit_id FK
+        varchar position_code
+        numeric initial_quantity
+        numeric current_quantity
+        varchar aliquot_status
+    }
+
+    TEST_TYPES {
+        smallint test_type_id PK
+        varchar test_code UK
+        varchar test_name
+        varchar result_unit
+    }
+
+    TEST_REQUESTS {
+        bigint test_request_id PK
+        varchar request_code UK
+        bigint sample_id FK
+        smallint test_type_id FK
+        bigint requested_by FK
+        bigint project_id FK
+        varchar request_status
+    }
+
+    SAMPLE_USAGE {
+        bigint usage_id PK
+        bigint aliquot_id FK
+        bigint project_id FK
+        bigint researcher_id FK
+        date used_on
+        numeric quantity_used
+        varchar purpose
+    }
+
+    AUDIT_LOG {
+        bigint audit_id PK
+        varchar table_name
+        bigint record_id
+        varchar operation
+        jsonb old_values
+        jsonb new_values
+        timestamptz changed_at
+    }

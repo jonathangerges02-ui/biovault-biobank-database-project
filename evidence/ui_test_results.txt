@@ -1,0 +1,11 @@
+BioVault bonus application tests — Python 3.11.4 — 2026-07-27
+
+........                                                                 [100%]
+8 passed
+
+PostgreSQL integration:
+counts {'donors': 12, 'samples': 20, 'test_requests': 15}
+plasma search rows=5
+donor create=True
+donor update status=INACTIVE
+donor delete=True

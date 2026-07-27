@@ -1,0 +1,21 @@
+BioVault PostgreSQL 16.14 acceptance run — 2026-07-27
+
+PASS: all nine main tables contain at least 10 rows
+PASS: donor code CHECK constraint rejects malformed codes
+PASS: aliquot quantity CHECK constraint works
+PASS: valid use atomically deducted 0.100 from inventory
+PASS: inventory overdraw is rejected
+PASS: expired consent blocks research use
+PASS: unassigned researcher is rejected
+PASS: audit trigger records donor updates
+PASS: all three required views exist
+
+ALL DATABASE ACCEPTANCE TESTS PASSED
+
+Clean setup counts:
+donors=12, researchers=10, projects=10, samples=20, aliquots=20,
+test_requests=15, usage_events=12
+
+Verified objects:
+15 base tables, 3 views, 43 physical indexes (including constraint indexes),
+10 triggers.
