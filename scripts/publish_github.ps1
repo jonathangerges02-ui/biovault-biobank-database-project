@@ -31,16 +31,22 @@ if ($dirty) {
     throw 'The worktree is not clean. Commit or review local changes before publishing.'
 }
 
-$existingOrigin = & git remote get-url origin 2>$null
-if ($LASTEXITCODE -eq 0 -and $existingOrigin) {
+$remotes = @(& git remote)
+if ($remotes -contains 'origin') {
+    $existingOrigin = (& git remote get-url origin).Trim()
     throw "A remote named origin already exists: $existingOrigin"
 }
 
 $login = (& gh api user --jq .login).Trim()
 $fullName = "$login/$RepositoryName"
 
-& gh repo view $fullName --json nameWithOwner 2>$null
-if ($LASTEXITCODE -eq 0) {
+$savedErrorPreference = $ErrorActionPreference
+$ErrorActionPreference = 'SilentlyContinue'
+$null = & gh repo view $fullName --json nameWithOwner 2>$null
+$repositoryAlreadyExists = $LASTEXITCODE -eq 0
+$ErrorActionPreference = $savedErrorPreference
+
+if ($repositoryAlreadyExists) {
     throw "Repository $fullName already exists. Choose another -RepositoryName."
 }
 
